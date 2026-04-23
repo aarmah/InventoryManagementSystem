@@ -99,24 +99,61 @@ namespace InventoryAPI.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
+        //public async Task<IActionResult> UpdateProduct(int id, [FromBody] UpdateProductDto updateProductDto)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    var existingProduct = await _productRepository.GetByIdAsync(id);
+        //    if (existingProduct == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    _mapper.Map(updateProductDto, existingProduct);
+        //    existingProduct.UpdatedAt = DateTime.UtcNow;
+
+        //    await _productRepository.UpdateAsync(existingProduct);
+        //    return NoContent();
+        //}
+
         public async Task<IActionResult> UpdateProduct(int id, [FromBody] UpdateProductDto updateProductDto)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
-            }
+                Console.WriteLine($"UpdateProduct called for ID: {id}");
+                Console.WriteLine($"Update data: Name={updateProductDto.Name}, Price={updateProductDto.Price}, Quantity={updateProductDto.Quantity}");
 
-            var existingProduct = await _productRepository.GetByIdAsync(id);
-            if (existingProduct == null)
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var existingProduct = await _productRepository.GetByIdAsync(id);
+                if (existingProduct == null)
+                {
+                    return NotFound($"Product with ID {id} not found");
+                }
+
+                // Update the product properties
+                existingProduct.Name = updateProductDto.Name;
+                existingProduct.Description = updateProductDto.Description;
+                existingProduct.Price = updateProductDto.Price;
+                existingProduct.Quantity = updateProductDto.Quantity;
+                existingProduct.CategoryId = updateProductDto.CategoryId;
+                existingProduct.UpdatedAt = DateTime.UtcNow;
+
+                await _productRepository.UpdateAsync(existingProduct);
+
+                return Ok(new { message = "Product updated successfully" });
+            }
+            catch (Exception ex)
             {
-                return NotFound();
+                Console.WriteLine($"Error updating product: {ex.Message}");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
-
-            _mapper.Map(updateProductDto, existingProduct);
-            existingProduct.UpdatedAt = DateTime.UtcNow;
-
-            await _productRepository.UpdateAsync(existingProduct);
-            return NoContent();
         }
 
         [HttpDelete("{id}")]
