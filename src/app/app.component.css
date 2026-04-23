@@ -1,0 +1,94 @@
+
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+
+.navbar {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  min-height: 60px;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-link {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+}
+.nav-link:hover {
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 5px;
+  transform: translateY(-2px);
+}
+
+.btn-danger {
+  padding: 5px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* .dropdown-item {
+  cursor: pointer;
+} */
+/* 
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+} */
+
+.btn-outline-light:hover {
+  background-color: rgba(255,255,255,0.2);
+  transform: translateY(-2px);
+}
+
+/* Ensure text is white */
+.navbar-dark .navbar-nav .nav-link {
+  color: white !important;
+}
+
+.navbar-dark .navbar-brand {
+  color: white !important;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: #ffd700 !important;
+}
+
+/* Dropdown menu styling */
+/* .dropdown-menu {
+  min-width: 200px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.dropdown-item-text {
+  color: #333;
+}
+
+.dropdown-item.text-danger:hover {
+  background-color: #dc3545;
+  color: white !important;
+} */
+
+/* Ensure no extra spacing when navbar is hidden */
+:host {
+  display: block;
+}
+/* Only apply container margin when navbar is visible */
+.container {
+  margin-top: 20px;
+}
+/* Remove any default margins that might cause white space */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

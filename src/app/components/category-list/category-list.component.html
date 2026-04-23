@@ -1,0 +1,44 @@
+ <div class="card border-0 shadow-sm rounded-4">
+      <div class="card-header bg-white border-0 pt-4 px-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <h4 class="mb-0"><i class="fa fa-tags me-2 text-success"></i>Categories List</h4>
+          <div>
+            <!-- Add Category button - Only show for Admin -->
+            <button *ngIf="isAdmin" class="btn btn-success rounded-pill me-2" (click)="goToAddCategory()">
+              <i class="fa fa-plus-circle me-2"></i>Add Category
+            </button>
+            <button class="btn btn-primary rounded-pill" (click)="loadCategories()">
+              <i class="fa fa-refresh me-2"></i>Refresh
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-4">
+        <div *ngIf="loading" class="text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        
+        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+        
+        <div *ngIf="!loading && categories.length > 0" class="row g-4">
+          <div *ngFor="let category of categories" class="col-md-4 col-lg-3">
+            <div class="card h-100 border-0 shadow-sm rounded-3 text-center p-3">
+              <i class="fa fa-folder-open fa-3x text-success mb-3"></i>
+              <h5 class="mb-2">{{ category.name }}</h5>
+              <p class="text-muted small">{{ category.description || 'No description' }}</p>
+              <span class="badge bg-info">{{ category.productCount }} Products</span>
+              <div *ngIf="isAdmin" class="mt-3">
+                <button class="btn btn-sm btn-warning me-1" (click)="editCategory(category.id)">
+                  <i class="fa fa-edit"></i> Edit
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="deleteCategory(category.id)">
+                  <i class="fa fa-trash"></i> Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

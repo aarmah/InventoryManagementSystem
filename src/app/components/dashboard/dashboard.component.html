@@ -1,0 +1,128 @@
+<div class="dashboard-container">
+      <!-- Hero Section -->
+      <div class="hero-section text-white text-center py-5 mb-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px;">
+        <div class="container">
+          <h1 class="display-4 fw-bold">Welcome back, {{ firstName }}!</h1>
+          <p class="lead">Here's what's happening with your inventory today.</p>
+        </div>
+      </div>
+
+      <div class="container">
+        <!-- Stats Cards - Visible to all users -->
+        <div class="row g-4 mb-4">
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+              <div class="card-body text-center p-4">
+                <i class="fa fa-boxes fa-3x text-primary mb-3"></i>
+                <h3 class="mb-2">{{ totalProducts }}</h3>
+                <p class="text-muted mb-0">Total Products</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+              <div class="card-body text-center p-4">
+                <i class="fa fa-tags fa-3x text-success mb-3"></i>
+                <h3 class="mb-2">{{ totalCategories }}</h3>
+                <p class="text-muted mb-0">Total Categories</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+              <div class="card-body text-center p-4">
+                <i class="fa fa-dollar fa-3x text-info mb-3"></i>
+                <h3 class="mb-2">{{ totalValue | currency }}</h3>
+                <p class="text-muted mb-0">Inventory Value</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions - Only show for Admin users -->
+        <div class="row mb-4" *ngIf="isAdmin">
+          <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4">
+              <div class="card-header bg-white border-0 pt-4 px-4">
+                <h5 class="mb-0">
+                  <i class="fa fa-bolt me-2 text-warning"></i>Admin Quick Actions
+                </h5>
+              </div>
+              <div class="card-body p-4">
+                <div class="row g-3">
+                  <div class="col-md-3 col-sm-6">
+                    <button class="btn btn-primary w-100 py-3 rounded-3" (click)="goToAddProduct()">
+                      <i class="fa fa-plus-circle me-2"></i>Add Product
+                    </button>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                    <button class="btn btn-success w-100 py-3 rounded-3" (click)="goToAddCategory()">
+                      <i class="fa fa-plus-circle me-2"></i>Add Category
+                    </button>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                    <button class="btn btn-info w-100 py-3 rounded-3 text-white" (click)="goToProducts()">
+                      <i class="fa fa-list me-2"></i>View Products
+                    </button>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                    <button class="btn btn-secondary w-100 py-3 rounded-3" (click)="goToCategories()">
+                      <i class="fa fa-tags me-2"></i>View Categories
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Products Section - Visible to all users -->
+        <div class="row">
+          <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4">
+              <div class="card-header bg-white border-0 pt-4 px-4">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0">
+                    <i class="fa fa-clock-o me-2 text-primary"></i>Recent Products
+                  </h5>
+                  <button class="btn btn-sm btn-link" (click)="goToProducts()">View All</button>
+                </div>
+              </div>
+              <div class="card-body p-4">
+                <div *ngIf="loading" class="text-center py-4">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+                <div *ngIf="!loading && recentProducts.length > 0" class="table-responsive">
+                  <table class="table table-hover">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let product of recentProducts">
+                        <td><strong>{{ product.name }}</strong></td>
+                        <td>{{ product.categoryName }}</td>
+                        <td>{{ product.price | currency }}</td>
+                        <td>
+                          <span [class.text-danger]="product.quantity < 10" 
+                                [class.text-warning]="product.quantity >= 10 && product.quantity < 20"
+                                class="fw-bold">
+                            {{ product.quantity }}
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

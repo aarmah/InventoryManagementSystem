@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card shadow-lg border-0 rounded-4">
+      <div class="card-header bg-white border-0 text-center pt-4">
+        <h3 class="mb-0">
+          <i class="fa fa-sign-in me-2 text-primary"></i>Welcome Back
+        </h3>
+        <p class="text-muted mt-2 mb-0">Please login to your account</p>
+      </div>
+      <div class="card-body p-4">
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+        
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Email Address</label>
+          <input 
+            type="email" 
+            class="form-control form-control-lg" 
+            [(ngModel)]="email" 
+            name="email"
+            placeholder="admin@inventory.com">
+        </div>
+        
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Password</label>
+          <div class="position-relative">
+            <input 
+              [type]="showPassword ? 'text' : 'password'" 
+              class="form-control form-control-lg" 
+              [(ngModel)]="password" 
+              name="password"
+              placeholder="Enter your password">
+            <button 
+              type="button" 
+              class="btn position-absolute end-0 top-50 translate-middle-y me-2" 
+              (click)="showPassword = !showPassword">
+              <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+            </button>
+          </div>
+        </div>
+        
+        <button 
+          class="btn btn-primary btn-lg w-100 rounded-3 mb-3" 
+          (click)="login()" 
+          [disabled]="loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+          <i *ngIf="!loading" class="fa fa-sign-in me-2"></i>
+          {{ loading ? 'Logging in...' : 'Login' }}
+        </button>
+        
+        <div class="text-center">
+          <a href="/register" class="text-decoration-none">Don't have an account? Register</a>
+        </div>
+         <div class="text-center">
+          <a href="/welcome" class="text-decoration-none">Cancel</a>
+        </div>
+        
+        
+        <div class="mt-4 p-3 bg-light rounded-3">
+          <p class="mb-1 small fw-semibold">Demo Credentials:</p>
+          <p class="mb-0 small text-muted">
+            Email: admin&#64;inventory.com<br>
+            Password: Admin&#64;123
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

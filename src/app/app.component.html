@@ -1,0 +1,55 @@
+<!-- Only show navigation when authenticated -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" *ngIf="isAuthenticated">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-white" href="/dashboard">
+      <i class="fa fa-boxes me-2"></i>
+      Inventory Management System
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <!-- Dashboard link - Show for all authenticated users -->
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/dashboard">
+            <i class="fa fa-dashboard"></i> Dashboard
+          </a>
+        </li>
+        <!-- Products link - Show for all authenticated users -->
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/products">
+            <i class="fa fa-product-hunt"></i> Products
+          </a>
+        </li>
+        <!-- Categories link - Show for all authenticated users -->
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/categories">
+            <i class="fa fa-tags"></i> Categories
+          </a>
+        </li>
+        <!-- Admin Panel link - Only show for Admin users -->
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link text-white" href="/admin">
+            <i class="fa fa-user-shield"></i> Admin Panel
+          </a>
+        </li>
+        <li class="nav-item">
+          <div class="d-flex align-items-center">
+            <span class="text-white me-2">
+              <i class="fa fa-user-circle"></i> {{ userName }}
+              <span *ngIf="!isAdmin" class="badge bg-secondary ms-2">User</span>
+              <span *ngIf="isAdmin" class="badge bg-warning text-dark ms-2">Admin</span>
+            </span>
+            <button class="btn btn-danger btn-sm" (click)="logout()">
+              <i class="fa fa-sign-out"></i> Logout
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Router outlet -->
+<router-outlet></router-outlet>

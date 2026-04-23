@@ -1,0 +1,12 @@
+ .breadcrumb {
+      background: transparent;
+      padding: 0;
+    }
+    .breadcrumb-item a {
+      color: #667eea;
+      text-decoration: none;
+    }
+    .breadcrumb-item.active {
+      color: #2d3748;
+      font-weight: 500;
+    }

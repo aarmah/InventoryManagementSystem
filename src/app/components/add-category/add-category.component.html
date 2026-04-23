@@ -1,0 +1,83 @@
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card border-0 shadow-sm rounded-4">
+      <div class="card-header bg-white border-0 pt-4 px-4">
+        <h4 class="mb-0">
+          <i class="fa" [ngClass]="isEditMode ? 'fa-edit' : 'fa-plus-circle'" style="margin-right: 8px; color: #28a745;"></i>
+          <span class="text-success">{{ isEditMode ? 'Edit Category' : 'Add New Category' }}</span>
+        </h4>
+      </div>
+      <div class="card-body p-4">
+        <!-- Success Message -->
+        <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show">
+          <i class="fa fa-check-circle me-2"></i>{{ successMessage }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" (click)="successMessage = ''"></button>
+        </div>
+        
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show">
+          <i class="fa fa-exclamation-triangle me-2"></i>{{ errorMessage }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" (click)="errorMessage = ''"></button>
+        </div>
+
+        <form (ngSubmit)="onSubmit()" #categoryForm="ngForm">
+          <!-- Category Name -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Category Name <span class="text-danger">*</span></label>
+            <input 
+              type="text" 
+              class="form-control form-control-lg" 
+              [(ngModel)]="category.name" 
+              name="name"
+              #name="ngModel"
+              required
+              minlength="2"
+              placeholder="Enter category name">
+            <div *ngIf="name.invalid && name.touched" class="text-danger small mt-1">
+              <div *ngIf="name.errors?.['required']">Category name is required</div>
+              <div *ngIf="name.errors?.['minlength']">Category name must be at least 2 characters</div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Description</label>
+            <textarea 
+              class="form-control" 
+              rows="4" 
+              [(ngModel)]="category.description" 
+              name="description"
+              placeholder="Enter category description"></textarea>
+            <small class="text-muted">Provide a brief description of what this category represents</small>
+          </div>
+
+          <!-- Preview -->
+          <div class="mb-4 p-3 bg-light rounded-3">
+            <label class="form-label fw-semibold">
+              <i class="fa fa-eye me-2 text-success"></i>Preview
+            </label>
+            <div class="preview-card">
+              <div class="preview-icon">
+                <i class="fa fa-folder-open fa-2x text-success"></i>
+              </div>
+              <div class="preview-info">
+                <h5 class="mb-1">{{ category.name || 'Category Name' }}</h5>
+                <p class="mb-0 text-muted small">{{ category.description || 'Category description will appear here' }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="d-flex gap-3 mt-4">
+            <button type="submit" class="btn btn-success btn-lg px-5 rounded-pill" [disabled]="loading || categoryForm.invalid">
+              <i class="fa fa-save me-2"></i>{{ loading ? 'Saving...' : (isEditMode ? 'Update Category' : 'Save Category') }}
+            </button>
+            <a href="/categories" class="btn btn-secondary btn-lg px-5 rounded-pill">
+              <i class="fa fa-times me-2"></i>Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

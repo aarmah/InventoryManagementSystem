@@ -1,0 +1,37 @@
+ .dashboard-container {
+      background: #f5f7fb;
+      min-height: calc(100vh - 70px);
+    }
+
+    .card {
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .btn {
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .table-hover tbody tr:hover {
+      background-color: rgba(0,0,0,0.02);
+      cursor: pointer;
+    }
+
+    .text-danger {
+      color: #dc3545 !important;
+      font-weight: bold;
+    }
+
+    .text-warning {
+      color: #ffc107 !important;
+      font-weight: bold;
+    }
